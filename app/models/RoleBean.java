@@ -5,5 +5,5 @@ import com.avaje.ebean.Model;
 /**
  * Created by Summer on 2016/2/11.
  */
-public class ArticleViewBean extends Model {
+public class RoleBean extends Model {
 }

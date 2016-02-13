@@ -6,7 +6,7 @@ import play.mvc.Result;
 /**
  * Created by Summer on 2016/2/11.
  */
-public class Group extends Controller {
+public class Role extends Controller {
     public Result index () {
         return ok();
     }
