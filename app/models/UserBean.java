@@ -15,7 +15,7 @@ public class UserBean extends Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column(name="name", length = 255, nullable = false, unique = true, )
+    @Column(name="name", length = 255, nullable = false, unique = true)
     public String name;
 
 
