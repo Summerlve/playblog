@@ -23,4 +23,3 @@ routesGenerator := InjectedRoutesGenerator
 
 // Ebean
 lazy val playblog = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
-playEbeanModels in Compile := Seq("models.*")

@@ -12,17 +12,17 @@ import javax.persistence.*;
 @Table(name = "user")
 public class UserBean extends Model {
     @Id
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(name = "id", length = 20, nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column(name = "username", length = 255, nullable = false, unique = true, columnDefinition = "CHARACTER SET utf8 COLLATE utf8_bin")
+    @Column(name = "username", nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
     public String username;
 
     @Column(name = "password_hash", length = 255, nullable = false)
     public String password_hash;
 
-    @Column(name = "pen_name", length = 255, nullable = false, unique = true, columnDefinition = "CHARACTER SET utf8 COLLATE utf8_bin")
+    @Column(name = "pen_name", nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
     public String pen_name;
 
     @Column(name = "avatar", length = 255)
@@ -31,5 +31,5 @@ public class UserBean extends Model {
     @Column(name = "introduce", length = 255)
     public String introduce;
 
-    public static Finder<Long, UserBean> find = new Finder<Long, UserBean>(Long.class, UserBean.class);
+    public static final Finder<Long, UserBean> find = new Finder<Long, UserBean>(Long.class, UserBean.class);
 }
