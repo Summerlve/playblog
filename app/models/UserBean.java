@@ -1,7 +1,12 @@
 package models;
 
 import com.avaje.ebean.Model;
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -31,5 +36,17 @@ public class UserBean extends Model {
     @Column(name = "introduce", length = 255)
     public String introduce;
 
-    public static final Finder<Long, UserBean> find = new Finder<Long, UserBean>(Long.class, UserBean.class);
+    @ManyToMany
+    @JoinTable(
+        name = "user_role",
+        joinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+        },
+        inverseJoinColumns = {
+            @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+        }
+    )
+    public List<RoleBean> roles = new ArrayList<RoleBean>();
+
+    public static final Finder<Long, UserBean> find = new Finder<Long, UserBean>(UserBean.class);
 }

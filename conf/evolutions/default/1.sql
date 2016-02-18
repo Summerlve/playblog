@@ -23,13 +23,25 @@ create table user (
 ;
 
 
+create table user_role (
+  user_id                        bigint(20) not null,
+  role_id                        bigint(20) not null,
+  constraint pk_user_role primary key (user_id, role_id))
+;
 
+
+
+alter table user_role add constraint fk_user_role_user_01 foreign key (user_id) references user (id) on delete restrict on update restrict;
+
+alter table user_role add constraint fk_user_role_role_02 foreign key (role_id) references role (id) on delete restrict on update restrict;
 
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
 
 drop table role;
+
+drop table user_role;
 
 drop table user;
 
