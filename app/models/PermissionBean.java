@@ -1,9 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
-import jdk.internal.instrumentation.TypeMappings;
 import play.data.validation.Constraints;
-import models.SubObjectBean;
 import javax.persistence.*;
 
 /**

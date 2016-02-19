@@ -4,14 +4,15 @@
 # --- !Ups
 
 create table role (
-  id                        bigint(20) auto_increment not null,
+  id                        bigint auto_increment not null,
   name                      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin not null,
+  description               varchar(255),
   constraint uq_role_name unique (name),
   constraint pk_role primary key (id))
 ;
 
 create table user (
-  id                        bigint(20) auto_increment not null,
+  id                        bigint auto_increment not null,
   username                  varchar(255) CHARACTER SET utf8 COLLATE utf8_bin not null,
   password_hash             varchar(255) not null,
   pen_name                  varchar(255) CHARACTER SET utf8 COLLATE utf8_bin not null,
@@ -24,8 +25,8 @@ create table user (
 
 
 create table user_role (
-  user_id                        bigint(20) not null,
-  role_id                        bigint(20) not null,
+  user_id                        bigint not null,
+  role_id                        bigint not null,
   constraint pk_user_role primary key (user_id, role_id))
 ;
 
