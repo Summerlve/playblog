@@ -1,11 +1,10 @@
 package models;
 
 import com.avaje.ebean.Model;
-import org.omg.CORBA.PUBLIC_MEMBER;
+import play.data.validation.Constraints;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -17,7 +16,7 @@ import java.util.List;
 @Table(name = "user")
 public class UserBean extends Model {
     @Id
-    @Column(name = "id", length = 20, nullable = false, unique = true)
+    @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
@@ -27,6 +26,7 @@ public class UserBean extends Model {
     @Column(name = "password_hash", length = 255, nullable = false)
     public String password_hash;
 
+    @Constraints.Required
     @Column(name = "pen_name", nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
     public String pen_name;
 
@@ -47,6 +47,15 @@ public class UserBean extends Model {
         }
     )
     public List<RoleBean> roles = new ArrayList<RoleBean>();
+
+    public static UserBean create (UserBean user, RoleBean role) {
+        // when user exists, it can not be create success beacause of the uniqe username field. so return null.
+
+        if (UserBean.find.where().eq("username", user.username).findList().size() != 0) return null;
+        user.roles.add(role);
+        user.save();
+        return user;
+    }
 
     public static final Finder<Long, UserBean> find = new Finder<Long, UserBean>(UserBean.class);
 }
