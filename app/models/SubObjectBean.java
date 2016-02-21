@@ -5,6 +5,9 @@ import javax.persistence.*;
 /**
  * Created by zh16437 on 2016/2/19.
  */
+
+@Entity
+@Table(name = "sub_object")
 public class SubObjectBean {
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -19,12 +22,12 @@ public class SubObjectBean {
     public ObjectBean object = new ObjectBean();
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "limit_id", referencedColumnName = "id")
-    public LimitBean limit = new LimitBean();
+    @JoinColumn(name = "item_id", referencedColumnName = "id")
+    public ItemBean item = new ItemBean();
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "range_id", referencedColumnName = "id")
-    public RangeBean range = new RangeBean();
+    @JoinColumn(name = "part_id", referencedColumnName = "id")
+    public PartBean part = new PartBean();
 
     @Column(name = "description", length = 255)
     public String description;

@@ -7,6 +7,9 @@ import javax.persistence.*;
 /**
  * Created by Summer on 2016/2/13.
  */
+
+@Entity
+@Table(name = "permission")
 public class PermissionBean extends Model {
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -27,4 +30,6 @@ public class PermissionBean extends Model {
 
     @Column(name = "description", length = 255)
     public String description;
+
+    public static final Finder<Long, PermissionBean> find = new Finder<Long, PermissionBean>(PermissionBean.class);
 }

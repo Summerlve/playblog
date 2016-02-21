@@ -1,19 +1,24 @@
 package models;
 
+import com.avaje.ebean.Model;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zh16437 on 2016/2/19.
+ * Created by Summer on 2016/2/13.
  */
-public class RangeBean {
+
+@Entity
+@Table(name = "item")
+public class ItemBean extends Model {
     @Id
     @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @OneToMany(mappedBy = "range")
+    @OneToMany(mappedBy = "item")
     public List<SubObjectBean> subObjects = new ArrayList<SubObjectBean>();
 
     @Column(name = "description", length = 255)

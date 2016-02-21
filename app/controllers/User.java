@@ -2,13 +2,14 @@ package controllers;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.user;
 
 /**
  * Created by Summer on 2016/2/11.
  */
 public class User extends Controller {
     public Result index () {
-        return ok();
+        return ok(user.render("123123"));
     }
 
     public Result one () {

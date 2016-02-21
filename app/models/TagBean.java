@@ -4,12 +4,15 @@ import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
  * Created by Summer on 2016/2/11.
  */
+
+@Entity
+@Table(name = "tag")
 public class TagBean extends Model {
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -25,7 +28,7 @@ public class TagBean extends Model {
 
     @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
-    public Date createAt;
+    public Calendar createAt;
 
     @ManyToOne
     @JoinColumn(name = "update_by")
@@ -33,8 +36,10 @@ public class TagBean extends Model {
 
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
-    public Date updateAt;
+    public Calendar updateAt;
 
     @OneToMany(mappedBy = "tag")
     public List<ArticleBean> articles = new ArrayList<ArticleBean>();
+
+    public static final Finder<Long, TagBean> find = new Finder<Long, TagBean>(TagBean.class);
 }

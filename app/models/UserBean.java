@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
+import scala.Boolean;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -48,13 +49,26 @@ public class UserBean extends Model {
     )
     public List<RoleBean> roles = new ArrayList<RoleBean>();
 
+    @OneToMany(mappedBy = "creater", cascade = CascadeType.ALL)
+    public List<ArticleBean> createdArticles = new ArrayList<ArticleBean>();
+
+    @OneToMany(mappedBy = "updater")
+    public List<ArticleBean> updatedArticles = new ArrayList<ArticleBean>();
+
     public static UserBean create (UserBean user, RoleBean role) {
         // when user exists, it can not be create success beacause of the uniqe username field. so return null.
+        if (!UserBean.isExists(user)) return null;
+        // if role do not exists, create user must failed.
+        if (!RoleBean.isExists(role)) return null;
 
-        if (UserBean.find.where().eq("username", user.username).findList().size() != 0) return null;
         user.roles.add(role);
         user.save();
         return user;
+    }
+
+    public static boolean isExists (UserBean user) {
+        if (UserBean.find.where().eq("username", user.username).findList().size() != 0) return true;
+        else return false;
     }
 
     public static final Finder<Long, UserBean> find = new Finder<Long, UserBean>(UserBean.class);

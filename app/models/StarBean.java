@@ -6,6 +6,9 @@ import java.util.Date;
 /**
  * Created by zh16437 on 2016/2/19.
  */
+
+@Entity
+@Table(name = "star")
 public class StarBean {
     @Id
     @Column(name = "id", nullable = false, unique = true)

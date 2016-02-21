@@ -9,6 +9,9 @@ import java.util.List;
 /**
  * Created by Summer on 2016/2/13.
  */
+
+@Entity
+@Table(name = "object")
 public class ObjectBean extends Model {
     @Id
     @Column(name = "id", nullable = false, unique = true)
