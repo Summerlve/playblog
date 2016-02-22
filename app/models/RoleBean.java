@@ -25,20 +25,35 @@ public class RoleBean extends Model {
     @ManyToMany(mappedBy = "roles")
     public List<UserBean> users = new ArrayList<UserBean>();
 
+    @ManyToMany
+    @JoinTable(
+        name = "role_permission",
+        joinColumns = {
+            @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+        },
+        inverseJoinColumns = {
+            @JoinColumn(name = "permission_id", referencedColumnName = "id", nullable = false)
+        }
+    )
+    public List<PermissionBean> permissions = new ArrayList<PermissionBean>();
+
     @Column(name = "description", length = 255)
     public String description;
 
     public static RoleBean create (RoleBean role) {
         // when role exists, it can not be create success beacause of the uniqe name field. so return null.
-        if (!RoleBean.isExists(role)) return null;
+        if (RoleBean.isExists(role)) return null;
 
         role.save();
         return role;
     }
 
     public static boolean isExists (RoleBean role) {
+        if (role.id != null) return RoleBean.find.byId(role.id) != null;
+
         if (RoleBean.find.where().eq("name", role.name).findList().size() != 0) return true;
-        else return false;
+
+        return false;
     }
 
     public static final Finder<Long, RoleBean> find = new Finder<Long, RoleBean>(RoleBean.class);

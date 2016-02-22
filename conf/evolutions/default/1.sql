@@ -103,6 +103,12 @@ create table user (
 ;
 
 
+create table role_permission (
+  role_id                        bigint not null,
+  permission_id                  bigint not null,
+  constraint pk_role_permission primary key (role_id, permission_id))
+;
+
 create table user_role (
   user_id                        bigint not null,
   role_id                        bigint not null,
@@ -133,6 +139,10 @@ create index ix_tag_updater_11 on tag (update_by);
 
 
 
+alter table role_permission add constraint fk_role_permission_role_01 foreign key (role_id) references role (id) on delete restrict on update restrict;
+
+alter table role_permission add constraint fk_role_permission_permission_02 foreign key (permission_id) references permission (id) on delete restrict on update restrict;
+
 alter table user_role add constraint fk_user_role_user_01 foreign key (user_id) references user (id) on delete restrict on update restrict;
 
 alter table user_role add constraint fk_user_role_role_02 foreign key (role_id) references role (id) on delete restrict on update restrict;
@@ -152,6 +162,8 @@ drop table operation;
 drop table part;
 
 drop table permission;
+
+drop table role_permission;
 
 drop table role;
 

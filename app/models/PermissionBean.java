@@ -3,6 +3,8 @@ package models;
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Summer on 2016/2/13.
@@ -16,9 +18,11 @@ public class PermissionBean extends Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Constraints.Required
     @Column(name = "name", nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
     public String name;
+
+    @ManyToMany(mappedBy = "permissions")
+    public List<RoleBean> roles = new ArrayList<RoleBean>();
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "operation_id", referencedColumnName = "id")

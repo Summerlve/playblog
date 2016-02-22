@@ -8,11 +8,11 @@ import views.html.user;
  * Created by Summer on 2016/2/11.
  */
 public class User extends Controller {
-    public Result index () {
-        return ok(user.render("123123"));
+    public Result index (String page, String limit) {
+        return ok(user.render(page + limit));
     }
 
-    public Result one () {
+    public Result one (Long id) {
         return ok();
     }
 
@@ -20,11 +20,11 @@ public class User extends Controller {
         return ok();
     }
 
-    public Result update () {
+    public Result update (Long id) {
         return ok();
     }
 
-    public Result remove () {
+    public Result remove (Long id) {
         return ok();
     }
 }

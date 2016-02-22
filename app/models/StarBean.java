@@ -19,7 +19,7 @@ public class StarBean {
     @JoinColumn(name = "star_to", referencedColumnName = "id")
     public ArticleBean article = new ArticleBean();
 
-    @Column(name = "star_by_ip")
+    @Column(name = "star_by_ip", nullable = false, columnDefinition = "INT(10) UNSIGNED NOT NULL")
     public String ip;
 
     @Column(name = "star_at")

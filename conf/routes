@@ -4,6 +4,23 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET     /users                      controllers.User.index()
+
+# User
+POST    /users                      controllers.User.add()
+DELETE  /users/:id                  controllers.User.remove(id: Long)
+PUT     /users/:id                  controllers.User.update(id: Long)
+GET     /users                      controllers.User.index(page, limit)
+GET     /users/:id                  controllers.User.one(id: Long)
+
+# Article
+
+# Tag
+
+# File
+
+# Role
+
+# Permission
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

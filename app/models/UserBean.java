@@ -2,8 +2,6 @@ package models;
 
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
-import scala.Boolean;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +23,10 @@ public class UserBean extends Model {
     public String username;
 
     @Column(name = "password_hash", length = 255, nullable = false)
-    public String password_hash;
+    public String passwordHash;
 
-    @Constraints.Required
     @Column(name = "pen_name", nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
-    public String pen_name;
+    public String penName;
 
     @Column(name = "avatar", length = 255)
     public String avatar;
@@ -57,18 +54,28 @@ public class UserBean extends Model {
 
     public static UserBean create (UserBean user, RoleBean role) {
         // when user exists, it can not be create success beacause of the uniqe username field. so return null.
-        if (!UserBean.isExists(user)) return null;
+        if (UserBean.isExists(user)) return null;
         // if role do not exists, create user must failed.
         if (!RoleBean.isExists(role)) return null;
 
+        if (role.id == null) {
+            role = RoleBean.find.where().eq("name", role.name).findUnique();
+        }
+
         user.roles.add(role);
         user.save();
+
         return user;
     }
 
     public static boolean isExists (UserBean user) {
+        if (user.id != null) return UserBean.find.byId(user.id) != null;
+
         if (UserBean.find.where().eq("username", user.username).findList().size() != 0) return true;
-        else return false;
+
+        if (UserBean.find.where().eq("pen_name", user.penName).findList().size() != 0) return true;
+
+        return false;
     }
 
     public static final Finder<Long, UserBean> find = new Finder<Long, UserBean>(UserBean.class);
