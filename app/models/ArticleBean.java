@@ -45,10 +45,16 @@ public class ArticleBean extends Model {
 
     public static ArticleBean create (ArticleBean article, UserBean user, TagBean tag) {
         // when user exists, it can not be create success beacause of the uniqe username field. so return null.
-        if (UserBean.find.where().eq("username", user.username).findList().size() != 0) return null;
+        if (!UserBean.isExists(user)) return null;
 
-        article.creater = user;
-        article.tag = tag;
+        try {
+            tag = TagBean.queryOrCreate(tag);
+            article.creater = user;
+            article.tag = tag;
+            article.save();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return article;
     }

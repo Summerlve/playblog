@@ -1,6 +1,8 @@
 package models;
 
 import com.avaje.ebean.Model;
+import controllers.Tag;
+import play.api.libs.concurrent.Execution;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -40,6 +42,22 @@ public class TagBean extends Model {
 
     @OneToMany(mappedBy = "tag")
     public List<ArticleBean> articles = new ArrayList<ArticleBean>();
+
+    public static TagBean queryOrCreate (TagBean tag) throws Exception {
+        if (tag.id != null) {
+            tag = TagBean.find.byId(tag.id);
+            return tag;
+        }
+
+        if (tag.name != null) {
+            tag = TagBean.find.where().eq("name", tag.name).findUnique();
+            if (tag == null) tag.save();
+
+            return tag;
+        }
+
+        throw new Exception("tag needs id or name");
+    }
 
     public static final Finder<Long, TagBean> find = new Finder<Long, TagBean>(TagBean.class);
 }
