@@ -63,8 +63,9 @@ create table role (
 create table star (
   id                        bigint auto_increment not null,
   star_to                   bigint not null,
-  star_by_ip                varchar(255),
+  star_by_ip                INT(10) UNSIGNED NOT NULL not null,
   star_at                   datetime(6),
+  constraint uq_star_1 unique (star_to,star_by_ip),
   constraint pk_star primary key (id))
 ;
 

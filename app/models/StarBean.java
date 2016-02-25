@@ -8,7 +8,12 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "star")
+@Table(
+    name = "star",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "star_to", "star_by_ip" })
+    }
+)
 public class StarBean {
     @Id
     @Column(name = "id", nullable = false, unique = true)
