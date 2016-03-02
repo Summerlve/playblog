@@ -21,7 +21,7 @@ public class OperationBean extends Model {
     @Column(name = "name", nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
     public String name;
 
-    @OneToMany(mappedBy = "operation")
+    @OneToMany(mappedBy = "operation", cascade = CascadeType.ALL)
     public List<PermissionBean> permissions = new ArrayList<PermissionBean>();
 
     @Column(name = "description", length = 255)

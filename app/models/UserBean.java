@@ -48,7 +48,7 @@ public class UserBean extends Model {
     @OneToMany(mappedBy = "creater", cascade = CascadeType.ALL)
     public List<ArticleBean> createdArticles = new ArrayList<ArticleBean>();
 
-    @OneToMany(mappedBy = "updater")
+    @OneToMany(mappedBy = "updater", cascade = CascadeType.ALL)
     public List<ArticleBean> updatedArticles = new ArrayList<ArticleBean>();
 
     public static UserBean create (UserBean user, RoleBean role) {

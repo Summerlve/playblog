@@ -16,7 +16,7 @@ public class PartBean {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @OneToMany(mappedBy = "part")
+    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL)
     public List<SubObjectBean> subObjects = new ArrayList<SubObjectBean>();
 
     @Column(name = "description", length = 255)

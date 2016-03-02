@@ -18,7 +18,7 @@ public class ItemBean extends Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     public List<SubObjectBean> subObjects = new ArrayList<SubObjectBean>();
 
     @Column(name = "description", length = 255)

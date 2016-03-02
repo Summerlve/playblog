@@ -2,7 +2,9 @@ package models;
 
 import com.avaje.ebean.Model;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Summer on 2016/2/11.
@@ -42,6 +44,9 @@ public class ArticleBean extends Model {
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
     public Calendar updateAt;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+    public List<StarBean> stars = new ArrayList<StarBean>();
 
     public static ArticleBean create (ArticleBean article, UserBean user, TagBean tag) {
         // when user exists, it can not be create success beacause of the uniqe username field. so return null.
