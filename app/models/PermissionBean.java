@@ -1,5 +1,6 @@
 package models;
 
+import be.objectify.deadbolt.core.models.Permission;
 import com.avaje.ebean.Model;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "permission")
-public class PermissionBean extends Model {
+public class PermissionBean extends Model implements Permission {
     @Id
     @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,11 @@ public class PermissionBean extends Model {
 
     @Column(name = "description", length = 255)
     public String description;
+
+    @Override
+    public String getValue() {
+        return this.name;
+    }
 
     public static final Finder<Long, PermissionBean> find = new Finder<Long, PermissionBean>(PermissionBean.class);
 }

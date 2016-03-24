@@ -1,5 +1,7 @@
 package models;
 
+import be.objectify.deadbolt.core.models.Permission;
+import be.objectify.deadbolt.core.models.Subject;
 import com.avaje.ebean.Model;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class UserBean extends Model {
+public class UserBean extends Model implements Subject {
     @Id
     @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +52,21 @@ public class UserBean extends Model {
 
     @OneToMany(mappedBy = "updater", cascade = CascadeType.ALL)
     public List<ArticleBean> updatedArticles = new ArrayList<ArticleBean>();
+
+    @Override
+    public List<RoleBean> getRoles() {
+        return roles;
+    }
+
+    @Override
+    public List<? extends Permission> getPermissions() {
+        return null;
+    }
+
+    @Override
+    public String getIdentifier() {
+        return this.username;
+    }
 
     public static UserBean create (UserBean user, RoleBean role) {
         // when user exists, it can not be create success beacause of the uniqe username field. so return null.

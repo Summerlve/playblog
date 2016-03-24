@@ -1,5 +1,6 @@
 package models;
 
+import be.objectify.deadbolt.core.models.Role;
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "role")
-public class RoleBean extends Model {
+public class RoleBean extends Model implements Role {
     @Id
     @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +40,11 @@ public class RoleBean extends Model {
 
     @Column(name = "description", length = 255)
     public String description;
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
 
     public static RoleBean create (RoleBean role) {
         // when role exists, it can not be create success beacause of the uniqe name field. so return null.
