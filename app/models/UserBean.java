@@ -60,12 +60,14 @@ public class UserBean extends Model implements Subject {
 
     @Override
     public List<? extends Permission> getPermissions() {
-        return null;
+        List<PermissionBean> permissions = new ArrayList<>();
+        roles.stream().forEach(role -> role.permissions.stream().forEach(permissions::add));
+        return permissions;
     }
 
     @Override
     public String getIdentifier() {
-        return this.username;
+        return String.valueOf(this.id); // use Long id -> String as identifier
     }
 
     public static UserBean create (UserBean user, RoleBean role) {
