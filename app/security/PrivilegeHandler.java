@@ -3,13 +3,12 @@ package security;
 import be.objectify.deadbolt.core.models.Subject;
 import be.objectify.deadbolt.java.AbstractDeadboltHandler;
 import be.objectify.deadbolt.java.DynamicResourceHandler;
-import models.UserBean;
 import play.libs.F;
 import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.Results;
 
 import java.util.Optional;
-import play.Logger;
 
 /**
  * Created by Summer on 3/24/16.
@@ -17,9 +16,18 @@ import play.Logger;
 public class PrivilegeHandler extends AbstractDeadboltHandler {
     @Override
     public F.Promise<Optional<Subject>> getSubject(Http.Context context) {
-        Logger.trace("id is:", context.session().get("id"));
-        String userId = Optional.ofNullable(context.session().get("id")).orElse("");
-        return F.Promise.promise(() -> Optional.ofNullable(UserBean.find.byId(Long.valueOf(userId))));
+        // get token from http request header 'Authorization'
+
+        return F.Promise.promise(
+                () -> Optional.ofNullable(context.request())
+                        .map(value -> value.headers())
+                        .map(value -> value.get("Authorization"))
+                        .map(value -> value[0])
+                        .flatMap(value -> {
+                            // get id from token
+                            return Optional.ofNullable(null);
+                        })
+        );
     }
 
     @Override
@@ -29,7 +37,7 @@ public class PrivilegeHandler extends AbstractDeadboltHandler {
 
     @Override
     public F.Promise<Result> onAuthFailure(Http.Context context, String content) {
-        return F.Promise.promise(() -> unauthorized());
+        return F.Promise.promise(Results::unauthorized);
     }
 
     @Override

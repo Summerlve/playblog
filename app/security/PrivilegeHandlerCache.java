@@ -17,7 +17,7 @@ public class PrivilegeHandlerCache implements HandlerCache {
     private final Map<String, DeadboltHandler> handlers = new HashMap<>();
 
     public PrivilegeHandlerCache() {
-        handlers.put("default", defaultHandler);
+        handlers.put("defaultHandler", defaultHandler);
     }
 
     @Override

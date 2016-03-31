@@ -46,21 +46,5 @@ public class RoleBean extends Model implements Role {
         return this.name;
     }
 
-    public static RoleBean create (RoleBean role) {
-        // when role exists, it can not be create success beacause of the uniqe name field. so return null.
-        if (RoleBean.isExists(role)) return null;
-
-        role.save();
-        return role;
-    }
-
-    public static boolean isExists (RoleBean role) {
-        if (role.id != null) return RoleBean.find.byId(role.id) != null;
-
-        if (RoleBean.find.where().eq("name", role.name).findList().size() != 0) return true;
-
-        return false;
-    }
-
     public static final Finder<Long, RoleBean> find = new Finder<Long, RoleBean>(RoleBean.class);
 }

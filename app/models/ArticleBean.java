@@ -48,21 +48,5 @@ public class ArticleBean extends Model {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     public List<StarBean> stars = new ArrayList<StarBean>();
 
-    public static ArticleBean create (ArticleBean article, UserBean user, TagBean tag) {
-        // when user exists, it can not be create success beacause of the uniqe username field. so return null.
-        if (!UserBean.isExists(user)) return null;
-
-        try {
-            tag = TagBean.queryOrCreate(tag);
-            article.creater = user;
-            article.tag = tag;
-            article.save();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return article;
-    }
-
     public static final Finder<Long, ArticleBean> find = new Finder<Long, ArticleBean>(ArticleBean.class);
 }
